@@ -1,0 +1,31 @@
+import arcpy
+import os
+
+# all input data are in country.gdb and output will also go to this gdb
+arcpy.env.workspace = "C:\Users\utdas\Desktop\Final\Breakthrough_4\NAV-NSW Streets"
+
+try:
+    in_features_orig = "NSW_Streets.shp"
+    in_features_copy = "Orignal_source_copy.shp"
+
+    
+    # Make a copy of the original data 
+    arcpy.CopyFeatures_management(in_features_orig, in_features_copy)
+
+    
+    # Features to which input will be aligned
+    
+    target_features = "Source.shp"
+    
+    search_dist = "10 Meters"
+       
+    arcpy.AlignFeatures_edit(in_features_orig, target_features, search_dist)
+    
+except arcpy.ExecuteError as aex:
+    print(arcpy.GetMessages(2))
+    
+except Exception as ex:
+    print(ex.args[0])
+
+print 'alingment completed successfully....'
+
